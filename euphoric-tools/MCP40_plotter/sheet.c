@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "boolean.h"
 #include "sheet.h"
-
+#include <stdlib.h>
 static struct {
 	char *line[YMAX+1];
 	int current_y;

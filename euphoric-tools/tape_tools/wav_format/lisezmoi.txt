@@ -1,0 +1,166 @@
+La collection d'utilitaires TapeTools
+-------------------------------------
+
+Ce petit document explique comment transférer des programmes
+Oric depuis une K7 vers un PC ou d'un PC vers l'Oric, mais
+aussi ce que sont les différents formats et ce qu'Euphoric
+peut faire avec. Les utilitaires TapeTools sont des programmes
+pour le PC (essentiellement des convertisseurs de format) qui
+facilitent l'utilisation d'images de K7 avec Euphoric ou un
+véritable Oric. 
+
+La première question qui peut venir à l'esprit est donc:
+
+QU'EST-CE QU'UNE IMAGE DE K7 ?
+
+Une image de K7 est un fichier qui peut être stocké sur le
+disque dur d'un PC (ou sur n'importe quel autre média) ET
+qui contient une forme numérique des données que l'on trouve
+normalement sur une K7 pour Oric. Une "vraie" K7 pour Oric est
+simplement une K7 audio, donc n'importe quel format de fichier
+capable de mémoriser du son pourrait être utilisé pour faire
+des images de K7. Mais il y a une grande quantité de formats
+de fichiers son, et le but principal d'Euphoric n'est pas de
+convertir des fichiers son, alors seulement deux formats ont
+été retenus pour une utilisation avec Euphoric.
+
+QUELS FORMATS D'IMAGES DE K7 SONT UTILISABLES AVEC EUPHORIC ?
+
+Un format de haut-niveau, et un format de bas-niveau...
+Le format de haut-niveau fait abstraction de l'encodage normal
+(FAST ou SLOW) utilisé par les routines de la rom Oric (celles
+appelées par les commandes CLOAD et CSAVE). Cela veut dire que
+ce format mémorise les octets de données sans encodage. C'est
+le format le plus répandu dans les archives Internet, et les
+noms de fichiers ont normalement une extension .TAP.
+Le format de bas niveau est une image fidèle du signal sonore
+émis par l'Oric. Cela permet de faire tourner sous Euphoric les
+programmes qui utilisent leur propres routines K7 (au lieu des
+routines en rom). Il y a quelques temps, j'utilisais un format
+spécifique qui permettait de garder une taille raisonnable à
+ces fichiers (les .4k8), mais maintenant les dernières versions
+d'Euphoric utilisent des fichiers .WAV standard. Toutefois,
+SEULS LES FICHIERS WAV A 4800 HZ, 8-BITS, MONO, SONT SUPPORTES.
+Si vous ne savez pas ce que ces paramètres signifient, lisez
+attentivement l'intégralité de ce document.
+
+OK, COMMENT JE TRANSFERE UNE K7 VERS MON PC ?
+
+C'est assez simple, je ne recommende plus le cable special
+Oriclink parce que la méthode d'enregistrement par la carte son
+donne de bon résultats. C'est un processus en deux étapes: vous
+enregistrez la K7 avec la carte son de votre PC et ensuite vous
+nettoyez le résultat.
+C'est simple, mais ça demande néanmoins une attention toute
+particulière pour la première étape (rappelez-vous que la lecture
+des K7 avec l'Oric n'était pas toujours fiable...).
+Pour enregistrer votre K7 avec le PC, vous devez connecter la
+sortie ligne (Line-Out) de votre magnétophone à l'entrée ligne
+(Line-In) de votre carte son, et vous utilisez le programme fourni
+avec votre carte pour enregistrer des sons, ou un des nombreux
+freeware ou shareware que l'on trouve sur Internet.
+Prenez surtout le temps de bien vérifier votre magnétophone:
+nettoyez la tête de lecture si nécessaire, mettez les aigüs au
+maximum et surtout ajustez la vis d'azimutage si vous voulez les
+meilleurs résultats (pour ce réglage, écoutez le programme et
+tournez la vis pour avoir le son le plus fort et clair possible).
+Sur votre logiciel d'enregistrement, sélectionnez le format suivant:
+44100 Hz, 8-bits non-signés, mono. C'EST LE SEUL FORMAT RECONNU PAR
+WAVCLEAN ! Lancez la lecture et ajustez le niveau d'enregistrement
+pour que le signal soit le plus fort possible, sans saturer :
+essayez d'avoir au moins la moitié de l'amplitude maximale.
+Maintenant vous pouvez enregistrer votre programme Oric. Si le
+programme est en plusieurs parties, enregistrez toutes les parties
+en un seul fichier WAV.
+La deuxième étape nécessite d'exécuter WAVCLEAN. Cet utilitaire
+essaie de redonner une forme carrée aux signaux déformés de la K7, et
+réduit la fréquence d'échantillonnage de 44100 Hz à 4800 Hz, ce qui
+fait que le fichier WAV produit est environ 10 fois plus petit que
+l'original, et vous pouvez alors l'utiliser avec Euphoric (depuis
+Windows, il suffit de cliquer dessus avec le bouton droit et de
+sélectionner 'CLOAD on Atmos'). Toutefois, si la qualité de votre
+échantillonnage n'était pas terrible, vous risquez d'avoir des
+erreurs de parité (le fameux message ERRORS FOUND) en chargeant
+le fichier avec Euphoric, alors vérifiez bien tous les paramètres
+qui ont un effet sur la qualité d'enregistrement, comme expliqué
+plus haut, et recommencez l'échantillonnage.
+Si vous avez malgré tout des erreurs, cela veut dire que la qualité
+de la cassette est loin d'être bonne: essayez alors de charger la
+cassette avec un véritable Oric, si vous y arrivez sans erreur, alors
+connectez la sortie Tape-Out de l'Oric à l'entrée ligne de la carte
+son de votre PC et enregistrez l'Oric quand vous resauvez le programme
+(CSAVE); vous aurez alors un enregistrement de bonne qualité que
+WAVCLEAN n'aura aucun mal à analyser.
+Si vous n'arrivez pas à charger le programme sans erreurs sur votre
+Oric réel, alors il vous faudra corriger les erreurs manuellement:
+mettez le plus de chances de votre côté en suivant les conseils
+d'échantillonnage donnés plus haut, et enregistrez votre cassette
+avec la carte son du PC (si vous chargez le programme sur l'Oric
+réel, vous ne saurez pas où sont les erreurs de parité, et vous
+validerez ces erreurs en resauvant le programme), puis utilisez
+l'utilitaire WAV2TAP (section suivante) qui vous dira où se
+trouvent les erreurs.
+
+CES FICHIERS WAV PRENNENT UNE PLACE FOLLE, COMMENT LES REDUIRE ?
+
+Si vous récupérez sur Internet un programme Oric sous forme de
+fichier WAV, il a sûrement toutes les raisons d'être sous cette
+forme: sans doute parce qu'il utilise un format incompatible avec
+les routines standard de la rom oric. Mais si vous avez utilisé
+l'outil WAVCLEAN de la section précédente, il y a de bonnes chances
+pour que vous puissiez convertir le résultat en une image K7 de
+haut niveau (un fichier .TAP). Utilisez WAV2TAP pour cette conversion.
+
+COMMENT TRANSFERER DES IMAGES .TAP/.WAV VERS MON ORIC REEL ?
+
+C'est facile; il suffit de connecter la sortie ligne de votre carte
+son (pas la sortie haut-parleur) à l'entrée Tape-In de votre Oric.
+Si vous avez un fichier WAV, tapez CLOAD "" <ENTER> sur l'Oric et
+jouez le fichier WAV avec n'importe quel programme de son (ou double-
+cliquez simplement dessus).
+ATTENTION, DE NOMBREUX PC NE JOUENT PAS LES FICHIERS 4800 Hz CORRECTEMENT !
+Si vous obtenez un ERRORS FOUND sur votre Oric, vous devez alors
+convertir le fichier WAV vers une fréquence plus standard telle que
+8 kHz ou 11,025 kHz (utilisez votre programme son favori pour ça).
+Si vous avez un fichier .TAP, il y a une étape supplémentaire, vous
+devez d'abord convertir le fichier TAP en un fichier WAV: c'est le
+travail de l'utilitaire TAP2WAV. Encore une fois, si vous obtenez un
+ERRORS FOUND sur votre Oric, cela veut dire que votre PC (ou Windows)
+ne joue pas correctement la fréquence 4800 Hz. Que cela ne tienne,
+TAP2WAV accepte une option sur la ligne de commande pour générer des
+fichiers WAV à 8 ou 11 kHz.
+Vous pouvez aussi connecter un magnétophone à la place de l'Oric, si
+vous voulez enregistrer le programme sur une cassette. Et vous pouvez
+bien sûr faire d'autres usages de ces fichiers WAV: graver un CD-audio
+pour connecter un lecteur de CD à votre Oric, etc. Certaines personnes
+ont même convertis des fichiers WAV en MP3 pour prendre moins de place
+et les envoyer sur Oric.
+
+EN BREF: QUEL OUTIL POUR QUEL USAGE ?
+
+|K7 réelle | WAV 'sale'| WAV propre| TAP  | Euphoric | Oric réel
+|          |  44100 Hz |           |      |          | ou K7,CD
++----------+-----------+-----------+------+----------+----------
+|  échantillonnage     |           |      |          |
+|    ---------->       |           |      |          |
++----------+-----------+-----------+------+----------+----------
+|          |       WAVCLEAN        |      |          |
+|          |     ------------>     |      |          |
++----------+-----------+-----------+------+----------+----------
+|          |           |       WAV2TAP    |          |
+|          |           |      -------->   |          |
+|          |           |       TAP2WAV    |          |
+|          |           |      <--------   |          |
++----------+-----------+------------------+----------+----------
+|          |           |   mode émulation matérielle |
+|          |           |    de K7 avec Euphoric      |
+|          |           |      <----------------->    |
++----------+-----------+-----------+-----------------+----------
+|          |           |           |    mode TAP     |  
+|          |           |           |   <-------->    |
++----------+-----------+-----------+-----------------+----------
+|                                play
+|                          ------------------------------>
+|               ----------------------------------------->
++---------------------------------------------------------------
+

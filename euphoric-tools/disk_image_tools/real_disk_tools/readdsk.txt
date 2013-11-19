@@ -1,0 +1,45 @@
+Here is Readdsk 2.0, it allows you to make images of real double-density disks
+in MFM format, which are used by Euphoric. Just type readdsk in order to have
+the program's usage.
+
+This version should be able to read a lot of different formats, e.g :
+- standard Oric floppies, i.e 256-bytes per sector floppies, with up to 16, 17,
+or even 18 sectors per track, and up to 82 tracks per side.
+- disks from others computers, most noticeable format being standard 512-bytes
+per sector floppies like on the PC (and also MSX, Atari ST, etc.).
+It should also be able to read up to 10 sectors like on some Atari ST tweaked
+formats (however, not up to 11 sectors because I think this must be not very
+reliable on a real oric or atari, so this shouldn't be used on the emulator,
+tell me if you disagree with this 8-)
+- disks with are a mix of different sector sizes, like RanDOS disks for the
+oric, which have system tracks of 256-bytes sectors and data tracks of
+512-bytes sectors. However, it can't read different sector sizes in a same
+track (just my lazyness...)
+
+Also, I've compiled it with Watcom 10.6 (very nice compiler) which allows to
+generate code for the old PC XT. This could be useful to those of you (like me)
+who have a 5"1/4 floppy on an old XT and no such format on their recent PC.
+You can also read 3" disks (the usual oric format) on your PC if you still
+have a 3" drive. Here is the overall procedure :
+- remove any floppy drive in your PC (just disconnect them ;-)
+- remove the 3" drive from its case
+- change the switch settings on your 3" drive so that it becomes a B drive
+- connect it to your PC floppy controller before the twist on the flat cable
+- change your BIOS settings if you have a modern PC so that drive B is declared
+as a 360K drive (or change the switches on your old XT to declare you have 2
+floppies)
+- don't send me a reclaim if you burn your drive/PC/home/wife when trying
+this procedure. THIS IS AT YOUR OWN RISK, I DON'T CLAIM IT WILL WORK FOR YOU.
+It works for me, that's all. If you really want to do it, but you don't know
+what is wire 1 on a flat cable, please post a request in comp.sys.oric or the
+oric mailing list.
+
+BUGS:
+- well, just tell me, I didn't had the time to test 8-)
+More specifically, I didn't had a disk with bad CRCs when trying it, the
+program should write an image with bad CRCs too, but I'm not sure the damaged
+data will be read. Some people may not understand the program creates a disk
+with a bad CRC in such a case... 
+- as it is based on BIOS calls, it doesn't read gap lengths, nor gap contents,
+nor protection tricks of any kind except bad CRCs (unusual CHRN numbers, weak
+bits...).

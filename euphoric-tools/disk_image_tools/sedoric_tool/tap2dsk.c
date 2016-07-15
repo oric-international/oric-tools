@@ -121,7 +121,6 @@ void store_file(byte *buf, char *name, byte *header)
 	int sectors=(end-start)/sizeof(sector)+1;
 	int desc_sect,desc_track;
 	int desc_off=0x0C;
-	int offset;
 
 	memset(descriptor,0,sizeof(sector));
 	find_free_sector(descriptor);

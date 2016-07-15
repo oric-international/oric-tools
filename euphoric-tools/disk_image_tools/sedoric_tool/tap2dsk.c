@@ -12,6 +12,7 @@
 #ifdev _MSC_VER
 #include <stdlib.h> // exit
 #endif
+#define DIRTRACK 20
 #define NBTRACKS 21
 #define NBSECT 17
 
@@ -183,8 +184,8 @@ int main(int argc, char *argv[])
 	char name[17];
 	byte file_buffer[48*1024];
 	FILE *tape, *dsk;
-	int dir_track=20, dir_sect=4;
-	int tracks=21; // minimum track number
+	int dir_track=DIRTRACK, dir_sect=4;
+	int tracks=DIRTRACK+1; // minimum track number
 	int total_sectors,free_sectors;
 	int tape_num,i, options=0;
 	int tape_name_index = -1;
@@ -276,9 +277,9 @@ int main(int argc, char *argv[])
 		int sector = i%NBSECT + 1;
 		allocate_sector(track,sector,sedoric+i*256);
 	}
-	allocate_sector(20,1,system_sect);
-	allocate_sector(20,2,bitmap);
-	allocate_sector(20,4,directory);
+	allocate_sector(DIRTRACK,1,system_sect);
+	allocate_sector(DIRTRACK,2,bitmap);
+	allocate_sector(DIRTRACK,4,directory);
 
 	for (tape_num=1; tape_num<argc-1; tape_num++) {
 		if (argv[tape_num][0]=='-') continue;
@@ -362,7 +363,7 @@ int main(int argc, char *argv[])
 	bitmap[3]=free_sectors >> 8;
 	bitmap[6]=tracks;
 	bitmap[9]=tracks;
-	update_sector(20,2,bitmap);
+	update_sector(DIRTRACK,2,bitmap);
 
 	imageheader.tracks=tracks;
 	fwrite(&imageheader,sizeof(imageheader),1,dsk);

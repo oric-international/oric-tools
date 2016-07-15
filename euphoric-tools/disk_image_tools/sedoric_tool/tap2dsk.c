@@ -12,6 +12,7 @@
 #ifdef _MSC_VER
 #include <stdlib.h> // exit
 #endif
+
 #define DIRTRACK 20
 #define NBTRACKS 21
 #define NBSECT 17
@@ -371,5 +372,3 @@ int main(int argc, char *argv[])
 		for (sect=1;sect<=NBSECT;sect++)
 			fwrite(disk[track][sect-1],sizeof(sector),1,dsk);
 }
-
-

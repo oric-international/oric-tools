@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdev _MSC_VER
+#ifdef _MSC_VER
 #include <stdlib.h> // exit
 #endif
 #define DIRTRACK 20

@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
 
 	dsk=fopen(argv[argc-1],"wb");
 	if (dsk==NULL) {
-		fprintf(stderr,"Cannot open %s for writing\n",argv[2]);
+		fprintf(stderr,"Cannot open %s for writing\n", argv[argc - 1]);
 		exit(1);
 	}
 

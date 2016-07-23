@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 	int dir_track=DIRTRACK, dir_sect=4;
 	int tracks=DIRTRACK+1; // minimum track number
 	int total_sectors,free_sectors;
-	int tape_num,i, options=0;
+	int tape_num,i;
 	int tape_name_index = -1;
 	int paper_color = -1;
 	int ink_color = -1;
@@ -371,4 +371,5 @@ int main(int argc, char *argv[])
 	for (track=0;track<tracks;track++)
 		for (sect=1;sect<=NBSECT;sect++)
 			fwrite(disk[track][sect-1],sizeof(sector),1,dsk);
+  fclose(dsk);
 }

@@ -3,10 +3,8 @@
 /* (refer BH comments) */
 
 #include <stdio.h>
-#if defined __MACH__
-	#include <string.h> /* BH */
-	#include <stdlib.h> /* BH */
-#endif
+#include <string.h> /* Needed for strcmp and strcasecmp */
+#include <stdlib.h> /* Needed for exit */
 
 FILE *in,*out;
 int file_size;
@@ -37,7 +35,6 @@ void emit_level(int size)
     for (i=0;i<size;i++) fputc(current_level,out);
     file_size+=size;
 }
-
 
 void emit_bit(int bit)
 {
@@ -98,9 +95,9 @@ int init(int argc, char *argv[]) /* BH */
     if (strcmp(argv[i],"-8")==0) speed=8000;
     else if (strcmp(argv[i],"-11")==0) speed=11025;
 #if defined __MACH__ /* compiling on MacOS */
-  else if (strcasecmp(argv[i],"-R")==0) raw_mode=1; /* BH MacOS */
+    else if (strcasecmp(argv[i],"-R")==0) raw_mode=1; /* BH MacOS */
 #else
-  else if (stricmp(argv[i],"-R")==0) raw_mode=1;   /*  BH Windows */
+    else if (strcasecmp(argv[i],"-R")==0) raw_mode=1;   /*  Use strcasecmp for Linux */
 #endif
     else { 
       printf("Bad option\n\n");
@@ -141,7 +138,7 @@ int main(int argc,char *argv[]) /* BH */
   {
 /* BH: It seems that -R option *must* be given otherwise we get stuck? */
 /*     So let's just set it regardless */
-		raw_mode=1;
+    raw_mode=1;
     if (raw_mode) 
     {
       int synchro=0;
@@ -169,8 +166,8 @@ int main(int argc,char *argv[]) /* BH */
         size=(header[4]*256+header[5])-(header[6]*256+header[7])+1;
         for (i=0;i<size;i++)
           emit_byte(fgetc(in));
-  		}
-  	}
+      }
+    }
   } /* BH */
   fclose(in);
 
